@@ -20,7 +20,7 @@ pokesiyou = round(pokesiyou,1)
 #ここから 取得用のcssid作成
 wazaid = []
 wazasiyouid = []
-for q in range(1,63):
+for q in range(1,30):
     if (q + 1) % 3 == 0:
         tmp = str(q)
         wazaid.append('td' + tmp)
