@@ -14,6 +14,7 @@ sleep(5)
 pokename = driver.find_element_by_id('monsinfo2').text.replace('-', '').replace('推定使用率：', '').replace(' ', '').strip('123456789.%#')
 pokesiyou_tmp = driver.find_element_by_id('monsinfo2').text
 pokesiyou = float(pokesiyou_tmp[-7:-1])
+pokesiyou = round(pokesiyou,1)
 
 #技使用率の取得
 #ここから 取得用のcssid作成
@@ -35,6 +36,7 @@ for i in wazaid:
     waza.append(tmp)
 for i in wazasiyouid:
     tmp = float(driver.find_element_by_id(i).text.replace('%', ''))
+    tmp = round(tmp,1)
     waza_siyouritu.append(tmp)
 
 
