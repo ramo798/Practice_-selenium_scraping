@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from time import sleep
+import csv
 
 options = Options()
 options.add_argument('--headless')
@@ -20,7 +21,7 @@ pokesiyou = round(pokesiyou,1)
 #ここから 取得用のcssid作成
 wazaid = []
 wazasiyouid = []
-for q in range(1,63):
+for q in range(1,19):
     if (q + 1) % 3 == 0:
         tmp = str(q)
         wazaid.append('td' + tmp)
@@ -39,11 +40,26 @@ for i in wazasiyouid:
     tmp = round(tmp,1)
     waza_siyouritu.append(tmp)
 
+#csv用の前処理
+write = []
+write.append(pokename)
+write.append(pokesiyou)
+write = write + waza + waza_siyouritu
 
-print(pokename)
-print(str(pokesiyou) + '%')
-for i, j in zip(waza,waza_siyouritu):
-    print(i,str(j)+'%')
+#csvへの処理
+header = ['pokename', 'pokerate', 'waza1', 'waza2', 'waza3', 'waza4', 'waza5', 'waza6', 'waza1r','waza2r', 'waza3r', 'waza4r', 'waza5r', 'waza6r']
+with open('some.csv', 'w') as f:
+    writer = csv.writer(f, lineterminator='\n') # 改行コード（\n）を指定しておく
+    writer.writerow(header)
+    writer.writerow(write)     # list（1次元配列）の場合
+f.close()
+####################################################
+#print(pokename)
+#print(str(pokesiyou) + '%')
+#for i, j in zip(waza,waza_siyouritu):
+#    print(i,str(j)+'%')
+for i in write:
+    print(i)
 
 
 driver.quit()
