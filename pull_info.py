@@ -11,18 +11,28 @@ driver.get(url)
 sleep(5)
 
 
-def Pull_pokeinfo():
+def Pull_pokeinfo(no):
+    if no != 0:
+        tmp = 'button' + str(no)
+        driver.find_element_by_id(tmp).click()
+        sleep(1)
     #表示中のページのポケモンの名前を取得,使用率も
-    pokename = driver.find_element_by_id('monsinfo2').text.replace('-', '').replace('推定使用率：', '').replace(' ', '').strip('123456789.%#')
+    pokename = driver.find_element_by_id('monsinfo2').text.replace('-', '').replace('推定使用率：', '').replace(' ', '').strip('0123456789.%#')
     pokesiyou_tmp = driver.find_element_by_id('monsinfo2').text
-    pokesiyou = float(pokesiyou_tmp[-7:-1])
+
+    tmp = pokesiyou_tmp[-7:-1]
+    judge = " " in tmp
+    if judge :
+        tmp = tmp.replace(' ', '').replace('：', '').strip('%')
+
+    pokesiyou = float(tmp)
     pokesiyou = round(pokesiyou,1)
 
     #技使用率の取得
     #ここから 取得用のcssid作成
     wazaid = []
     wazasiyouid = []
-    for q in range(1,19):
+    for q in range(1,25):
         if (q + 1) % 3 == 0:
             tmp = str(q)
             wazaid.append('td' + tmp)
@@ -37,7 +47,7 @@ def Pull_pokeinfo():
         tmp = driver.find_element_by_id(i).text
         waza.append(tmp)
     for i in wazasiyouid:
-        tmp = float(driver.find_element_by_id(i).text.replace('%', ''))
+        tmp = float(driver.find_element_by_id(i).text.replace(' ', '').replace('：', '').strip('%'))
         tmp = round(tmp,1)
         waza_siyouritu.append(tmp)
 
