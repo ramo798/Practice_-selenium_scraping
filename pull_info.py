@@ -11,7 +11,10 @@ driver.get(url)
 sleep(5)
 
 
-def Pull_pokeinfo():
+def Pull_pokeinfo(no):
+    if no != 0:
+        tmp = 'button' + str(no)
+        driver.find_element_by_id(tmp).click()
     #表示中のページのポケモンの名前を取得,使用率も
     pokename = driver.find_element_by_id('monsinfo2').text.replace('-', '').replace('推定使用率：', '').replace(' ', '').strip('123456789.%#')
     pokesiyou_tmp = driver.find_element_by_id('monsinfo2').text
